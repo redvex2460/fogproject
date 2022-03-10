@@ -929,6 +929,7 @@ displayOSChoices() {
                 echo "          1) Redhat Based Linux (Redhat, CentOS, Mageia)"
                 echo "          2) Debian Based Linux (Debian, Ubuntu, Kubuntu, Edubuntu)"
                 echo "          3) Arch Linux"
+                echo "          4) Alpine Linux"
                 echo
                 echo -n "  Choice: [$strSuggestedOS] "
                 read osid
@@ -937,7 +938,7 @@ displayOSChoices() {
                         osid=$strSuggestedOS
                         break
                         ;;
-                    1|2|3)
+                    1|2|3|4)
                         break
                         ;;
                     *)
@@ -968,6 +969,12 @@ doOSSpecificIncludes() {
             osname="Arch"
             . ../lib/arch/config.sh
             systemctl="yes"
+            ;;
+        4)
+            echo -e "\n\n  Starting Alpine Installation\n\n"
+            osname="Alpine"
+            . ../lib/alpine/config.sh
+            . ../lib/alpine/functions.sh
             ;;
         *)
             echo -e "  Sorry, answer not recognized\n\n"
@@ -1014,7 +1021,7 @@ stopInitScript() {
         if [ "$systemctl" == "yes" ]; then
             systemctl is-active --quiet $serviceItem && systemctl stop $serviceItem >>$workingdir/error_logs/fog_error_${version}.log 2>&1 && sleep 2
         else
-            [[ ! -x $initdpath/$serviceItem ]] && continue
+            [[ ! -x $initdpath/$serviceItem ]] && echo "(Not Installed)" && continue
             $initdpath/$serviceItem status >/dev/null 2>&1 && $initdpath/$serviceItem stop >>$workingdir/error_logs/fog_error_${version}.log 2>&1 && sleep 2
         fi
         echo "OK"

@@ -24,6 +24,9 @@ if [[ ! $EUID -eq 0 ]]; then
     exit 1
 fi
 which useradd >/dev/null 2>&1
+if [[ $? -eq 1 ]]; then
+    which adduser >/dev/null 2>&1
+fi
 if [[ $? -eq 1 || $(echo $PATH | grep -o "sbin" | wc -l) -lt 2 ]]; then
     echo "Please switch to a proper root environment to run the installer!"
     echo "Use 'sudo -i' or 'su -' (skip the ' and note the hyphen at the end"

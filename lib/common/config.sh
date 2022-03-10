@@ -72,6 +72,9 @@ else
         *[Uu][Bb][Uu][Nn][Tt][Uu]*|*[Bb][Ii][Aa][Nn]*|*[Mm][Ii][Nn][Tt]*)
             initdsrc="../packages/init.d/ubuntu"
             ;;
+        *[Aa][Ll][Pp][Ii][Nn][Ee]*)
+            initdsrc="../packages/init.d/alpine"
+            ;;
         *)
             initdsrc="../packages/init.d/redhat"
             ;;
